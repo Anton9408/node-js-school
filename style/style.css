@@ -37,16 +37,20 @@ body {
 }
 
 .wrapper form input {
-      font-family: 'MullerRegular';
-      padding: 10px;
-      outline: none;
-      border: 2px solid #f1f1f1;
-      transition: 0.4s border;
+    font-family: 'MullerRegular';
+    padding: 10px;
+    outline: none;
+    border: 1px solid #f1f1f1;
+    transition: 0.4s border;
 }
 
 .wrapper form input:focus {
     border-color: #b5b5b5;
     transition: 0.4s border;
+}
+
+.wrapper form input.error {
+    border: 1px solid red;
 }
 
 .wrapper form button {
