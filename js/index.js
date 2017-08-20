@@ -27,9 +27,10 @@ const sumPhoneNumbers = phone => phone
 const getJSON = () => {
 	fetch(form.action)
 		.then(response => {
-			const data = response.json();
-
-			switch (data.status) {
+			return response.json();
+		})
+		.then(response => {
+			switch (response.status) {
 				case 'success': {
 					resultContainer.classList.add('success');
 					resultContainer.innerText = 'Success';
@@ -38,13 +39,13 @@ const getJSON = () => {
 
 				case 'error': {
 					resultContainer.classList.add('error');
-					resultContainer.innerText = data.reason;
+					resultContainer.innerText = response.reason;
 					break;
 				}
 
 				case 'progress': {
 					resultContainer.classList.add('progress');
-					setTimeout(getJSON, data.timeout);
+					setTimeout(getJSON, response.timeout);
 					break;
 				}
 			}
