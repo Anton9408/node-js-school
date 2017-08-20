@@ -1,4 +1,4 @@
 {
 	"status": "error",
-	"reason": String
+	"reason": "Some reason"
 }
