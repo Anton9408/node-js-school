@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "description": "Test task for node school",
   "main": "index.js",
+  "scripts": {
+    "test": "eslint js/index.js",
+    "precommit": "npm test",
+    "prepush": "npm test"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Anton9408/node-js-school.git"
@@ -12,5 +17,11 @@
   "bugs": {
     "url": "https://github.com/Anton9408/node-js-school/issues"
   },
-  "homepage": "https://github.com/Anton9408/node-js-school#readme"
+  "homepage": "https://github.com/Anton9408/node-js-school#readme",
+  "devDependencies": {
+    "eslint": "^4.5.0",
+    "eslint-config-airbnb-base": "^11.3.2",
+    "eslint-plugin-import": "^2.7.0",
+    "husky": "^0.14.3"
+  }
 }
