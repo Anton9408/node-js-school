@@ -4,7 +4,7 @@
   "description": "Test task for node school",
   "main": "index.js",
   "scripts": {
-    "test": "eslint js/index.js",
+    "test": "eslint index.js",
     "precommit": "npm test",
     "prepush": "npm test"
   },
