@@ -1,9 +1,9 @@
-const submitButton = document.getElementById('submitButton');
-
 const mailRegExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const domainNames = ['ya.ru', 'yandex.ru', 'yandex.ua', 'yandex.by', 'yandex.kz', 'yandex.com'];
+
 const form = document.forms.form;
 const resultContainer = document.getElementById('resultContainer');
+const submitButton = document.getElementById('submitButton');
 
 const validateEmail = email => mailRegExp.test(email);
 
@@ -53,16 +53,18 @@ const getJSON = () => {
     .catch(alert);
 };
 
-submitButton.onclick = function onSubmitButtonClick(event) {
-  event.preventDefault();
+const validate = () => {
+  const errorFields = new Set();
 
   const fioElement = form.fio;
   const fio = fioElement.value.trim();
 
   if (fio.split(' ').length !== 3) {
     fioElement.classList.add('error');
+    errorFields.add('fio');
   } else if (fioElement.classList.contains('error')) {
     fioElement.classList.remove('error');
+    errorFields.delete('fio');
   }
 
   const emailElement = form.email;
@@ -70,8 +72,10 @@ submitButton.onclick = function onSubmitButtonClick(event) {
 
   if (!validateEmail(email) || !checkDomain(email)) {
     emailElement.classList.add('error');
+    errorFields.add('email');
   } else if (emailElement.classList.contains('error')) {
     emailElement.classList.remove('error');
+    errorFields.delete('email');
   }
 
   const phoneElement = form.phone;
@@ -79,15 +83,53 @@ submitButton.onclick = function onSubmitButtonClick(event) {
 
   if (sumPhoneNumbers(phone) > 30) {
     phoneElement.classList.add('error');
+    errorFields.add('phone');
   } else if (phoneElement.classList.contains('error')) {
     phoneElement.classList.remove('error');
+    errorFields.delete('phone');
   }
 
-  if (!form.getElementsByClassName('error').length) {
+  return {
+    isValid: !!form.getElementsByClassName('error').length,
+    errorFields: Array.from(errorFields),
+  };
+};
+
+const onSubmitButtonClick = (event) => {
+  event.preventDefault();
+
+  const { isValid } = validate();
+
+  if (isValid) {
     submitButton.disabled = true;
     getJSON();
   }
 };
+
+window.MyForm = {
+  validate,
+  getDate() {
+    return {
+      fio: form.fio.value,
+      email: form.email.value,
+      phone: form.phone.value,
+    };
+  },
+  setDate({ fio, email, phone }) {
+    if (fio) {
+      form.fio.value = fio;
+    }
+    if (email) {
+      form.email.value = email;
+    }
+    if (phone) {
+      form.phone.value = phone;
+    }
+  },
+  submit: onSubmitButtonClick,
+};
+
+submitButton.onclick = onSubmitButtonClick;
 
 jQuery(($) => {
   $('#phone').mask('+7 (999) 999-99-99');
