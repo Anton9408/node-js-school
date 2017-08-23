@@ -1,0 +1,16 @@
+{
+  "name": "node-js",
+  "version": "1.0.0",
+  "description": "Test task for node school",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Anton9408/node-js-school.git"
+  },
+  "author": "Anton Chernov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Anton9408/node-js-school/issues"
+  },
+  "homepage": "https://github.com/Anton9408/node-js-school#readme"
+}
