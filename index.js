@@ -57,7 +57,7 @@ const validate = () => {
   const errorFields = new Set();
 
   const fioElement = form.fio;
-  const fio = fioElement.value.trim();
+  const fio = fioElement.value;
 
   if (fio.split(' ').length !== 3) {
     fioElement.classList.add('error');
@@ -68,7 +68,7 @@ const validate = () => {
   }
 
   const emailElement = form.email;
-  const email = emailElement.value.trim();
+  const email = emailElement.value;
 
   if (!validateEmail(email) || !checkDomain(email)) {
     emailElement.classList.add('error');
@@ -81,7 +81,7 @@ const validate = () => {
   const phoneElement = form.phone;
   const phone = phoneElement.value;
 
-  if (sumPhoneNumbers(phone) > 30) {
+  if (sumPhoneNumbers(phone) > 30 || phone.replace(/\D+/g, '').length < 11) {
     phoneElement.classList.add('error');
     errorFields.add('phone');
   } else if (phoneElement.classList.contains('error')) {
@@ -90,7 +90,7 @@ const validate = () => {
   }
 
   return {
-    isValid: !!form.getElementsByClassName('error').length,
+    isValid: !form.getElementsByClassName('error').length,
     errorFields: Array.from(errorFields),
   };
 };
